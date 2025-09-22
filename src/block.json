@@ -1,0 +1,46 @@
+
+  {
+	"$schema": "https://schemas.wp.org/trunk/block.json",
+	"apiVersion": 3,
+	"name": "telex/block-zapper",
+	"version": "0.1.0",
+	"title": "Block Zapper",
+	"category": "design",
+	"icon": "database-remove",
+	"description": "A container block that allows you to group other blocks and reset their custom properties with a single click.",
+	"example": {
+		"innerBlocks": [
+			{
+				"name": "core/heading",
+				"attributes": {
+					"content": "Sample Heading"
+				}
+			},
+			{
+				"name": "core/paragraph",
+				"attributes": {
+					"content": "This is sample content inside the Block Zapper container."
+				}
+			}
+		]
+	},
+	"supports": {
+		"html": false,
+		"align": ["wide", "full"],
+		"spacing": {
+			"margin": true,
+			"padding": true
+		},
+		"color": {
+			"gradients": true,
+			"background": true
+		}
+	},
+	"textdomain": "block-zapper-block-wp",
+	"editorScript": "file:./index.js",
+	"editorStyle": "file:./index.css",
+	"style": "file:./style-index.css",
+	"viewScript": "file:./view.js",
+	"render": "file:./render.php"
+}
+  
