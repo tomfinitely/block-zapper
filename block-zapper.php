@@ -1,8 +1,8 @@
 <?php
 /**
  * Plugin Name:       Block Zapper
- * Description:       A container block that allows you to group other blocks and reset their custom properties with a single click.
- * Version:           0.1.0
+ * Description:       A container block that allows you to group other blocks and reset their custom properties with granular control.
+ * Version:           0.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            WordPress Telex

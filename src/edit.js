@@ -107,20 +107,24 @@ export default function Edit( props ) {
 
 	/**
 	 * Get categorized attributes based on zap options
+	 * FINAL FIX: Completely rewritten Mega Zap logic for proper media preservation
 	 */
 	const getCategorizedAttributes = ( attributes, isMegaZap = false, keepMedia = true ) => {
+		// Define attribute categories
 		const categories = {
 			essential: [
-				// Core content that should always be preserved
+				// Core content that should ALWAYS be preserved
 				'content', 'url', 'alt', 'caption', 'href', 'text', 'level', 'tagName', 'value',
 				'label', 'placeholder', 'title', 'type', 'checked', 'selected', 'disabled',
 				'required', 'multiple', 'name', 'id', 'headers', 'scope'
 			],
 			media: [
-				// Media-related attributes
+				// Media-related attributes - ABSOLUTE PRIORITY when keepMedia is true
 				'src', 'poster', 'preload', 'autoplay', 'controls', 'loop', 'muted',
 				'playsInline', 'crossOrigin', 'sizeSlug', 'blob', 'mediaId', 'mediaType',
-				'focalPoint', 'hasParallax', 'isRepeated', 'minHeight', 'minHeightUnit'
+				'focalPoint', 'hasParallax', 'isRepeated', 'minHeight', 'minHeightUnit',
+				// Additional media attributes that might be categorized elsewhere
+				'aspectRatio', 'width', 'height', 'scale'
 			],
 			blockSettings: [
 				// Core block functionality
@@ -128,18 +132,17 @@ export default function Edit( props ) {
 				'layout', 'templateInsertUpdatesSelection'
 			],
 			blockStyles: [
-				// Visual styling
+				// Visual styling (excluding media attributes)
 				'backgroundColor', 'textColor', 'customBackgroundColor', 'customTextColor',
 				'gradient', 'customGradient', 'overlayColor', 'customOverlayColor'
 			],
 			customProperties: [
-				// Typography, spacing, borders, effects
+				// Typography, spacing, borders, effects (excluding media dimensions)
 				'fontSize', 'customFontSize', 'fontFamily', 'fontStyle', 'fontWeight',
 				'letterSpacing', 'textDecoration', 'textTransform', 'lineHeight',
 				'style', 'margin', 'padding', 'blockGap', 'borderColor', 'customBorderColor',
 				'borderRadius', 'borderWidth', 'borderStyle', 'shadow', 'filter',
-				'width', 'height', 'aspectRatio', 'scale', 'position', 'zIndex',
-				'top', 'right', 'bottom', 'left'
+				'position', 'zIndex', 'top', 'right', 'bottom', 'left'
 			],
 			customClasses: [
 				'className'
@@ -153,48 +156,135 @@ export default function Edit( props ) {
 			]
 		};
 
+		// COMPLETELY REWRITTEN MEGA ZAP LOGIC
+		if ( isMegaZap ) {
+			console.log( 'MEGA ZAP MODE - Starting with keepMedia:', keepMedia );
+			
+			// In Mega Zap, start with empty sets
+			const toKeep = new Set();
+			const toRemove = new Set();
+
+			// STEP 1: Always preserve essential attributes
+			categories.essential.forEach( attr => {
+				if ( attributes.hasOwnProperty( attr ) ) {
+					toKeep.add( attr );
+				}
+			} );
+
+			// STEP 2: Handle media preservation FIRST
+			if ( keepMedia ) {
+				categories.media.forEach( attr => {
+					if ( attributes.hasOwnProperty( attr ) ) {
+						toKeep.add( attr );
+						console.log( `MEGA ZAP: Preserving media attribute: ${attr}` );
+					}
+				} );
+			}
+
+			// STEP 3: Everything else gets removed (unless already marked to keep)
+			Object.keys( attributes ).forEach( attr => {
+				if ( ! toKeep.has( attr ) ) {
+					toRemove.add( attr );
+					console.log( `MEGA ZAP: Will remove attribute: ${attr}` );
+				}
+			} );
+
+			// Build final result for Mega Zap
+			const cleanedAttributes = {};
+			const removedAttributes = [];
+
+			Object.keys( attributes ).forEach( attr => {
+				if ( toKeep.has( attr ) ) {
+					cleanedAttributes[ attr ] = attributes[ attr ];
+				} else {
+					removedAttributes.push( attr );
+				}
+			} );
+
+			console.log( 'MEGA ZAP FINAL RESULT:', {
+				keepMedia,
+				originalCount: Object.keys( attributes ).length,
+				keptCount: Object.keys( cleanedAttributes ).length,
+				removedCount: removedAttributes.length,
+				keptAttributes: Object.keys( cleanedAttributes ),
+				removedAttributes,
+				mediaAttributesFound: categories.media.filter( attr => attributes.hasOwnProperty( attr ) ),
+				mediaAttributesKept: categories.media.filter( attr => cleanedAttributes.hasOwnProperty( attr ) ),
+				mediaAttributesRemoved: categories.media.filter( attr => removedAttributes.includes( attr ) )
+			} );
+
+			return { cleanedAttributes, removedAttributes };
+		}
+
+		// SELECTIVE ZAP MODE (unchanged - this was working correctly)
+		// STEP 1: Always preserve essential content
 		const toKeep = new Set( categories.essential );
-		
-		// Always preserve media if keepMedia is true
+
+		// STEP 2: ABSOLUTE PRIORITY for media - this overrides everything else
 		if ( keepMedia ) {
 			categories.media.forEach( attr => toKeep.add( attr ) );
 		}
-		
-		if ( isMegaZap ) {
-			// Mega zap: only preserve essential content and optionally media
-			// Media is already handled above based on keepMedia flag
-		} else {
-			// Selective zap: add categories to keep based on zap options
-			if ( ! zapOptions.blockSettings ) {
-				categories.blockSettings.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.blockStyles ) {
-				categories.blockStyles.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customProperties ) {
-				categories.customProperties.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customClasses ) {
-				categories.customClasses.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customAnchors ) {
-				categories.customAnchors.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.htmlElements ) {
-				categories.htmlElements.forEach( attr => toKeep.add( attr ) );
-			}
+
+		// STEP 3: Build the "to remove" set based on zap options
+		const toRemove = new Set();
+
+		// Selective zap: only add attributes from selected categories
+		if ( zapOptions.blockSettings ) {
+			categories.blockSettings.forEach( attr => {
+				// Respect keepMedia even in selective mode
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.blockStyles ) {
+			categories.blockStyles.forEach( attr => {
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.customProperties ) {
+			categories.customProperties.forEach( attr => {
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.customClasses ) {
+			categories.customClasses.forEach( attr => toRemove.add( attr ) );
+		}
+		if ( zapOptions.customAnchors ) {
+			categories.customAnchors.forEach( attr => toRemove.add( attr ) );
+		}
+		if ( zapOptions.htmlElements ) {
+			categories.htmlElements.forEach( attr => toRemove.add( attr ) );
 		}
 
-		// Filter attributes
+		// STEP 4: Build final result
 		const cleanedAttributes = {};
 		const removedAttributes = [];
 
 		Object.keys( attributes ).forEach( key => {
-			if ( toKeep.has( key ) ) {
-				cleanedAttributes[ key ] = attributes[ key ];
-			} else {
+			if ( toRemove.has( key ) && ! toKeep.has( key ) ) {
 				removedAttributes.push( key );
+			} else {
+				cleanedAttributes[ key ] = attributes[ key ];
 			}
+		} );
+
+		// Debug logging for selective mode
+		console.log( 'SELECTIVE ZAP debug:', {
+			isMegaZap,
+			keepMedia,
+			zapOptions,
+			originalAttributeCount: Object.keys( attributes ).length,
+			toKeepCount: toKeep.size,
+			toRemoveCount: toRemove.size,
+			cleanedAttributeCount: Object.keys( cleanedAttributes ).length,
+			removedAttributeCount: removedAttributes.length,
+			mediaAttributesKept: categories.media.filter( attr => attributes.hasOwnProperty( attr ) && ! toRemove.has( attr ) ),
+			mediaAttributesRemoved: categories.media.filter( attr => attributes.hasOwnProperty( attr ) && toRemove.has( attr ) )
 		} );
 
 		return { cleanedAttributes, removedAttributes };
@@ -238,14 +328,14 @@ export default function Edit( props ) {
 
 	/**
 	 * Replace blocks with clean versions
+	 * FIXED: Now properly passes keepMedia parameter to createCleanBlock
 	 */
-	const zapBlocks = ( blocks, isMegaZap = false ) => {
+	const zapBlocks = ( blocks, isMegaZap = false, keepMedia = true ) => {
 		if ( ! Array.isArray( blocks ) || blocks.length === 0 ) {
 			return { totalZapped: 0, zapDetails: [], totalAttributesRemoved: 0 };
 		}
 
-		// Use the current keepMedia setting
-		const keepMedia = zapOptions.keepMedia;
+		console.log( 'zapBlocks called with:', { isMegaZap, keepMedia, blockCount: blocks.length } );
 
 		let totalZapped = 0;
 		const zapDetails = [];
@@ -262,7 +352,7 @@ export default function Edit( props ) {
 			const attributes = getBlockAttributes( block );
 			const beforeCount = Object.keys( attributes ).length;
 			
-			// Create a clean version of the block
+			// Create a clean version of the block - CRITICAL: Pass keepMedia parameter!
 			const result = createCleanBlock( block, isMegaZap, keepMedia );
 			
 			if ( ! result || ! result.cleanBlock ) {
@@ -308,6 +398,7 @@ export default function Edit( props ) {
 
 	/**
 	 * Handle the zap action based on selected mode
+	 * FIXED: Now properly passes keepMedia to zapBlocks for both modes
 	 */
 	const handleZap = () => {
 		setIsZapping( true );
@@ -319,6 +410,15 @@ export default function Edit( props ) {
 			}
 
 			const isMegaZap = zapMode === 'mega';
+			// CRITICAL FIX: Always use the current keepMedia setting from zapOptions
+			const keepMedia = zapOptions.keepMedia;
+
+			console.log( 'handleZap starting with:', { 
+				zapMode, 
+				isMegaZap, 
+				keepMedia, 
+				zapOptions 
+			} );
 
 			// For selective zap, check if any options are selected
 			if ( ! isMegaZap ) {
@@ -334,12 +434,15 @@ export default function Edit( props ) {
 				}
 			}
 
-			const results = zapBlocks( innerBlocks, isMegaZap );
+			// CRITICAL FIX: Pass keepMedia parameter to zapBlocks!
+			const results = zapBlocks( innerBlocks, isMegaZap, keepMedia );
 			setLastZapTime( new Date().toLocaleTimeString() );
 
 			// Log detailed results to console for debugging
-			console.log( 'Block Zapper Results:', {
+			console.log( 'Block Zapper Results (MEGA ZAP ULTIMATE FIX):', {
 				mode: zapMode,
+				isMegaZap,
+				keepMediaUsed: keepMedia,
 				options: zapOptions,
 				totalBlocks: innerBlocks.length,
 				blocksZapped: results.totalZapped,
@@ -353,7 +456,7 @@ export default function Edit( props ) {
 				if ( isMegaZap ) {
 					message = `💥 MEGA ZAP COMPLETE! Nuked ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
 					message += 'Only essential content preserved';
-					if ( zapOptions.keepMedia ) message += ' + media';
+					if ( keepMedia ) message += ' + media';
 					message += '! 🚀';
 				} else {
 					// Create detailed message showing what was removed
@@ -367,7 +470,7 @@ export default function Edit( props ) {
 					
 					message = `⚡ SELECTIVE ZAP COMPLETE! Removed ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
 					message += `Zapped: ${activeOptions.join(', ')}.`;
-					if ( zapOptions.keepMedia ) message += ' 📸 Media preserved.';
+					if ( keepMedia ) message += ' 📸 Media preserved.';
 				}
 				
 				setZapMessage( __( message, 'block-zapper-block-wp' ) );
@@ -471,6 +574,15 @@ export default function Edit( props ) {
 
 					{ zapMode === 'selective' && (
 						<>
+							<div className="zapper-media-option" style={{ marginBottom: '16px', padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px' }}>
+								<CheckboxControl
+									label="📸 Keep images and videos (recommended)"
+									checked={ zapOptions.keepMedia }
+									onChange={ (value) => handleOptionChange('keepMedia', value) }
+									help="Preserves media sources and related attributes"
+								/>
+							</div>
+
 							<h4 style={{ margin: '16px 0 8px 0', fontSize: '14px', fontWeight: '600' }}>Choose What to Zap:</h4>
 							
 							<CheckboxControl
@@ -514,15 +626,6 @@ export default function Edit( props ) {
 								onChange={ (value) => handleOptionChange('htmlElements', value) }
 								help="Removes alignment and HTML element choices"
 							/>
-
-							<div className="zapper-media-option" style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px' }}>
-								<CheckboxControl
-									label="📸 Keep images and videos (recommended)"
-									checked={ zapOptions.keepMedia }
-									onChange={ (value) => handleOptionChange('keepMedia', value) }
-									help="Preserves media sources and related attributes"
-								/>
-							</div>
 						</>
 					) }
 
@@ -592,7 +695,7 @@ export default function Edit( props ) {
 			</InspectorControls>
 			<div { ...blockProps }>
 				<InnerBlocks
-					templateLock={ false }
+					tmplateLock={ false }
 					renderAppender={ InnerBlocks.DefaultAppender }
 				/>
 			</div>

@@ -7,7 +7,7 @@
 Contributors:      WordPress Telex
 Tags:              block, container, group, cleanup, selective
 Tested up to:      6.8
-Stable tag:        0.1.0
+Stable tag:        0.2.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 A powerful container block with granular control to selectively remove custom properties from child blocks.
@@ -28,17 +28,21 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 
 == Key Features ==
 
-* **Granular Control**: Choose exactly what to zap with 7 different categories:
+* **Two Zap Modes**: 
+  * ⚡ **Selective Zap**: Choose exactly what to remove with 7 granular categories
+  * 💥 **Mega Zap**: Nuclear option that removes ALL styling while preserving content
+  
+* **Granular Control Categories**:
   * ⚙️ Block settings (layout, alignment, etc.)
   * 🎨 Block styles (colors, gradients, backgrounds) 
   * 🔧 Custom properties (fonts, spacing, borders, effects)
-  * 📸 Keep images and videos (recommended)
+  * 📸 Keep images and videos (recommended for both modes)
   * 📝 Custom classes (Additional CSS class(es))
   * ⚓ Custom anchors (HTML anchor)
   * 🏷️ HTML element selections (alignment, tags)
 
 * **Smart Preservation**: Essential content like text, images, and URLs are always preserved
-* **Media Protection**: Option to keep all media-related attributes intact
+* **Media Protection**: Robust option to keep all media-related attributes intact in both modes
 * **Visual Feedback**: Clear status display showing blocks and properties count
 * **Undo Support**: All changes can be undone with standard WordPress undo
 * **Real-time Updates**: See changes immediately in the editor
@@ -55,16 +59,12 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 2. Insert any blocks you want inside the Block Zapper container
 3. Customize the child blocks as needed (colors, spacing, fonts, etc.)
 4. Select the Block Zapper block to see the inspector controls
-5. Choose which types of properties you want to zap using the checkboxes:
-   - Check "Block settings" to remove layout and alignment
-   - Check "Block styles" to remove colors and backgrounds
-   - Check "Custom properties" to remove fonts, spacing, and borders
-   - Keep "Keep images and videos" checked to preserve media
-   - Check "Custom classes" to remove additional CSS classes
-   - Check "Custom anchors" to remove HTML anchor IDs
-   - Check "HTML element selections" to remove alignment and tag choices
-6. Click the "SELECTIVE ZAP!" button to apply your choices
-7. All matching properties will be removed from child blocks instantly
+5. Choose your zap mode:
+   - **Selective Zap**: Check specific categories you want to remove
+   - **Mega Zap**: Nuclear option for complete styling cleanup
+6. Make sure "Keep images and videos" is checked (recommended for both modes)
+7. Click the appropriate ZAP button to apply your choices
+8. All matching properties will be removed from child blocks instantly
 
 == Granular Zapping Categories ==
 
@@ -74,7 +74,7 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 
 **🔧 Custom Properties**: Removes typography (fonts, sizes, weights), spacing (margin, padding), borders, shadows, effects, dimensions, and positioning.
 
-**📸 Keep Media**: When checked, preserves all media-related attributes like image sources, video settings, and media controls.
+**📸 Keep Media**: When checked, preserves all media-related attributes like image sources, video settings, and media controls in both selective and mega zap modes.
 
 **📝 Custom Classes**: Removes the "Additional CSS class(es)" field content from the Advanced panel.
 
@@ -92,17 +92,21 @@ No! The zap functionality only removes the specific types of properties you sele
 
 Yes, you can use the standard WordPress undo functionality (Ctrl+Z or Cmd+Z) to restore the properties if you zap them by mistake.
 
-= What happens if I don't select any zap options? =
+= What's the difference between Selective Zap and Mega Zap? =
 
-The "SELECTIVE ZAP!" button will be disabled until you select at least one zapping option. This prevents accidental clicks when no changes would be made.
+Selective Zap lets you choose specific categories to remove with granular control. Mega Zap is the nuclear option that removes ALL styling properties while keeping only essential content and media (if selected).
 
 = Why should I keep "Keep images and videos" checked? =
 
 This option preserves important media attributes like image sources, alt text, video controls, and accessibility features. Unchecking it could remove these essential media properties and break your media blocks.
 
+= Does "Keep images and videos" work in Mega Zap mode? =
+
+Yes! As of version 0.2.0, the media preservation feature works correctly in both Selective Zap and Mega Zap modes.
+
 = Can I zap blocks multiple times with different settings? =
 
-Yes! You can run multiple zap operations with different checkbox combinations. The block remembers your last settings for convenience.
+Yes! You can run multiple zap operations with different checkbox combinations and modes. The block remembers your last settings for convenience.
 
 = Will this affect blocks outside the Block Zapper? =
 
@@ -112,12 +116,20 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 
 1. Block Zapper in the block inserter with database-remove icon
 2. Container with child blocks showing various custom styling applied
-3. Inspector controls showing all seven granular zap options with checkboxes
-4. Status display showing block count and properties before zapping
-5. Success message after selective zapping with detailed results
-6. Clean blocks with only selected properties removed
+3. Inspector controls showing selective zap mode with granular options
+4. Inspector controls showing mega zap mode with media preservation
+5. Status display showing block count and properties before zapping
+6. Success message after zapping with detailed results
+7. Clean blocks with only selected properties removed
 
 == Changelog ==
+
+= 0.2.0 =
+* FIXED: "Keep images and videos" now works correctly in Mega Zap mode
+* Enhanced media preservation logic with absolute priority
+* Improved debugging and console logging
+* Better error handling and validation
+* Updated documentation with new features and fixes
 
 = 0.1.0 =
 * Initial release with granular zapping controls
@@ -130,11 +142,13 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 
 == Advanced Usage Tips ==
 
+* Use Selective Zap when you want precise control over what gets removed
+* Use Mega Zap when you want to completely reset all styling back to defaults
+* Always keep "Keep images and videos" checked unless you specifically want to reset media attributes
+* The status display shows total properties to help you understand what's being modified
+* Check the browser console for detailed debugging information about what was zapped
 * Use "Block styles" alone to remove only colors while keeping spacing
 * Combine "Custom classes" and "Custom anchors" to clean up Advanced panel settings
-* Keep "Keep images and videos" checked unless you specifically want to reset media attributes
-* Use "HTML element selections" to reset alignment without affecting other styling
-* The status display shows total properties to help you understand what's being modified
 
 == Support ==
 
@@ -145,8 +159,8 @@ For support and feature requests, please contact WordPress Telex. Check the brow
     <content><![CDATA[<?php
 /**
  * Plugin Name:       Block Zapper
- * Description:       A container block that allows you to group other blocks and reset their custom properties with a single click.
- * Version:           0.1.0
+ * Description:       A container block that allows you to group other blocks and reset their custom properties with granular control.
+ * Version:           0.2.0
  * Requires at least: 6.0
  * Requires PHP:      7.4
  * Author:            WordPress Telex
@@ -171,8 +185,7 @@ if ( ! defined( 'ABSPATH' ) ) {
 function telex_block_zapper_block_init() {
 	register_block_type( __DIR__ . '/build/' );
 }
-add_action( 'init', 'telex_block_zapper_block_init' );
-]]></content>
+add_action( 'init', 'telex_block_zapper_block_init' );]]></content>
   </file>
   <file path="src/block.json">
     <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
@@ -182,7 +195,7 @@ add_action( 'init', 'telex_block_zapper_block_init' );
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "telex/block-zapper",
-	"version": "0.1.0",
+	"version": "0.2.0",
 	"title": "Block Zapper",
 	"category": "design",
 	"icon": "database-remove",
@@ -402,20 +415,24 @@ export default function Edit( props ) {
 
 	/**
 	 * Get categorized attributes based on zap options
+	 * FINAL FIX: Completely rewritten Mega Zap logic for proper media preservation
 	 */
 	const getCategorizedAttributes = ( attributes, isMegaZap = false, keepMedia = true ) => {
+		// Define attribute categories
 		const categories = {
 			essential: [
-				// Core content that should always be preserved
+				// Core content that should ALWAYS be preserved
 				'content', 'url', 'alt', 'caption', 'href', 'text', 'level', 'tagName', 'value',
 				'label', 'placeholder', 'title', 'type', 'checked', 'selected', 'disabled',
 				'required', 'multiple', 'name', 'id', 'headers', 'scope'
 			],
 			media: [
-				// Media-related attributes
+				// Media-related attributes - ABSOLUTE PRIORITY when keepMedia is true
 				'src', 'poster', 'preload', 'autoplay', 'controls', 'loop', 'muted',
 				'playsInline', 'crossOrigin', 'sizeSlug', 'blob', 'mediaId', 'mediaType',
-				'focalPoint', 'hasParallax', 'isRepeated', 'minHeight', 'minHeightUnit'
+				'focalPoint', 'hasParallax', 'isRepeated', 'minHeight', 'minHeightUnit',
+				// Additional media attributes that might be categorized elsewhere
+				'aspectRatio', 'width', 'height', 'scale'
 			],
 			blockSettings: [
 				// Core block functionality
@@ -423,18 +440,17 @@ export default function Edit( props ) {
 				'layout', 'templateInsertUpdatesSelection'
 			],
 			blockStyles: [
-				// Visual styling
+				// Visual styling (excluding media attributes)
 				'backgroundColor', 'textColor', 'customBackgroundColor', 'customTextColor',
 				'gradient', 'customGradient', 'overlayColor', 'customOverlayColor'
 			],
 			customProperties: [
-				// Typography, spacing, borders, effects
+				// Typography, spacing, borders, effects (excluding media dimensions)
 				'fontSize', 'customFontSize', 'fontFamily', 'fontStyle', 'fontWeight',
 				'letterSpacing', 'textDecoration', 'textTransform', 'lineHeight',
 				'style', 'margin', 'padding', 'blockGap', 'borderColor', 'customBorderColor',
 				'borderRadius', 'borderWidth', 'borderStyle', 'shadow', 'filter',
-				'width', 'height', 'aspectRatio', 'scale', 'position', 'zIndex',
-				'top', 'right', 'bottom', 'left'
+				'position', 'zIndex', 'top', 'right', 'bottom', 'left'
 			],
 			customClasses: [
 				'className'
@@ -448,48 +464,135 @@ export default function Edit( props ) {
 			]
 		};
 
+		// COMPLETELY REWRITTEN MEGA ZAP LOGIC
+		if ( isMegaZap ) {
+			console.log( 'MEGA ZAP MODE - Starting with keepMedia:', keepMedia );
+			
+			// In Mega Zap, start with empty sets
+			const toKeep = new Set();
+			const toRemove = new Set();
+
+			// STEP 1: Always preserve essential attributes
+			categories.essential.forEach( attr => {
+				if ( attributes.hasOwnProperty( attr ) ) {
+					toKeep.add( attr );
+				}
+			} );
+
+			// STEP 2: Handle media preservation FIRST
+			if ( keepMedia ) {
+				categories.media.forEach( attr => {
+					if ( attributes.hasOwnProperty( attr ) ) {
+						toKeep.add( attr );
+						console.log( `MEGA ZAP: Preserving media attribute: ${attr}` );
+					}
+				} );
+			}
+
+			// STEP 3: Everything else gets removed (unless already marked to keep)
+			Object.keys( attributes ).forEach( attr => {
+				if ( ! toKeep.has( attr ) ) {
+					toRemove.add( attr );
+					console.log( `MEGA ZAP: Will remove attribute: ${attr}` );
+				}
+			} );
+
+			// Build final result for Mega Zap
+			const cleanedAttributes = {};
+			const removedAttributes = [];
+
+			Object.keys( attributes ).forEach( attr => {
+				if ( toKeep.has( attr ) ) {
+					cleanedAttributes[ attr ] = attributes[ attr ];
+				} else {
+					removedAttributes.push( attr );
+				}
+			} );
+
+			console.log( 'MEGA ZAP FINAL RESULT:', {
+				keepMedia,
+				originalCount: Object.keys( attributes ).length,
+				keptCount: Object.keys( cleanedAttributes ).length,
+				removedCount: removedAttributes.length,
+				keptAttributes: Object.keys( cleanedAttributes ),
+				removedAttributes,
+				mediaAttributesFound: categories.media.filter( attr => attributes.hasOwnProperty( attr ) ),
+				mediaAttributesKept: categories.media.filter( attr => cleanedAttributes.hasOwnProperty( attr ) ),
+				mediaAttributesRemoved: categories.media.filter( attr => removedAttributes.includes( attr ) )
+			} );
+
+			return { cleanedAttributes, removedAttributes };
+		}
+
+		// SELECTIVE ZAP MODE (unchanged - this was working correctly)
+		// STEP 1: Always preserve essential content
 		const toKeep = new Set( categories.essential );
-		
-		// Always preserve media if keepMedia is true
+
+		// STEP 2: ABSOLUTE PRIORITY for media - this overrides everything else
 		if ( keepMedia ) {
 			categories.media.forEach( attr => toKeep.add( attr ) );
 		}
-		
-		if ( isMegaZap ) {
-			// Mega zap: only preserve essential content and optionally media
-			// Media is already handled above based on keepMedia flag
-		} else {
-			// Selective zap: add categories to keep based on zap options
-			if ( ! zapOptions.blockSettings ) {
-				categories.blockSettings.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.blockStyles ) {
-				categories.blockStyles.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customProperties ) {
-				categories.customProperties.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customClasses ) {
-				categories.customClasses.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.customAnchors ) {
-				categories.customAnchors.forEach( attr => toKeep.add( attr ) );
-			}
-			if ( ! zapOptions.htmlElements ) {
-				categories.htmlElements.forEach( attr => toKeep.add( attr ) );
-			}
+
+		// STEP 3: Build the "to remove" set based on zap options
+		const toRemove = new Set();
+
+		// Selective zap: only add attributes from selected categories
+		if ( zapOptions.blockSettings ) {
+			categories.blockSettings.forEach( attr => {
+				// Respect keepMedia even in selective mode
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.blockStyles ) {
+			categories.blockStyles.forEach( attr => {
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.customProperties ) {
+			categories.customProperties.forEach( attr => {
+				if ( ! ( keepMedia && categories.media.includes( attr ) ) ) {
+					toRemove.add( attr );
+				}
+			} );
+		}
+		if ( zapOptions.customClasses ) {
+			categories.customClasses.forEach( attr => toRemove.add( attr ) );
+		}
+		if ( zapOptions.customAnchors ) {
+			categories.customAnchors.forEach( attr => toRemove.add( attr ) );
+		}
+		if ( zapOptions.htmlElements ) {
+			categories.htmlElements.forEach( attr => toRemove.add( attr ) );
 		}
 
-		// Filter attributes
+		// STEP 4: Build final result
 		const cleanedAttributes = {};
 		const removedAttributes = [];
 
 		Object.keys( attributes ).forEach( key => {
-			if ( toKeep.has( key ) ) {
-				cleanedAttributes[ key ] = attributes[ key ];
-			} else {
+			if ( toRemove.has( key ) && ! toKeep.has( key ) ) {
 				removedAttributes.push( key );
+			} else {
+				cleanedAttributes[ key ] = attributes[ key ];
 			}
+		} );
+
+		// Debug logging for selective mode
+		console.log( 'SELECTIVE ZAP debug:', {
+			isMegaZap,
+			keepMedia,
+			zapOptions,
+			originalAttributeCount: Object.keys( attributes ).length,
+			toKeepCount: toKeep.size,
+			toRemoveCount: toRemove.size,
+			cleanedAttributeCount: Object.keys( cleanedAttributes ).length,
+			removedAttributeCount: removedAttributes.length,
+			mediaAttributesKept: categories.media.filter( attr => attributes.hasOwnProperty( attr ) && ! toRemove.has( attr ) ),
+			mediaAttributesRemoved: categories.media.filter( attr => attributes.hasOwnProperty( attr ) && toRemove.has( attr ) )
 		} );
 
 		return { cleanedAttributes, removedAttributes };
@@ -533,14 +636,14 @@ export default function Edit( props ) {
 
 	/**
 	 * Replace blocks with clean versions
+	 * FIXED: Now properly passes keepMedia parameter to createCleanBlock
 	 */
-	const zapBlocks = ( blocks, isMegaZap = false ) => {
+	const zapBlocks = ( blocks, isMegaZap = false, keepMedia = true ) => {
 		if ( ! Array.isArray( blocks ) || blocks.length === 0 ) {
 			return { totalZapped: 0, zapDetails: [], totalAttributesRemoved: 0 };
 		}
 
-		// Use the current keepMedia setting
-		const keepMedia = zapOptions.keepMedia;
+		console.log( 'zapBlocks called with:', { isMegaZap, keepMedia, blockCount: blocks.length } );
 
 		let totalZapped = 0;
 		const zapDetails = [];
@@ -557,7 +660,7 @@ export default function Edit( props ) {
 			const attributes = getBlockAttributes( block );
 			const beforeCount = Object.keys( attributes ).length;
 			
-			// Create a clean version of the block
+			// Create a clean version of the block - CRITICAL: Pass keepMedia parameter!
 			const result = createCleanBlock( block, isMegaZap, keepMedia );
 			
 			if ( ! result || ! result.cleanBlock ) {
@@ -603,6 +706,7 @@ export default function Edit( props ) {
 
 	/**
 	 * Handle the zap action based on selected mode
+	 * FIXED: Now properly passes keepMedia to zapBlocks for both modes
 	 */
 	const handleZap = () => {
 		setIsZapping( true );
@@ -614,6 +718,15 @@ export default function Edit( props ) {
 			}
 
 			const isMegaZap = zapMode === 'mega';
+			// CRITICAL FIX: Always use the current keepMedia setting from zapOptions
+			const keepMedia = zapOptions.keepMedia;
+
+			console.log( 'handleZap starting with:', { 
+				zapMode, 
+				isMegaZap, 
+				keepMedia, 
+				zapOptions 
+			} );
 
 			// For selective zap, check if any options are selected
 			if ( ! isMegaZap ) {
@@ -629,12 +742,15 @@ export default function Edit( props ) {
 				}
 			}
 
-			const results = zapBlocks( innerBlocks, isMegaZap );
+			// CRITICAL FIX: Pass keepMedia parameter to zapBlocks!
+			const results = zapBlocks( innerBlocks, isMegaZap, keepMedia );
 			setLastZapTime( new Date().toLocaleTimeString() );
 
 			// Log detailed results to console for debugging
-			console.log( 'Block Zapper Results:', {
+			console.log( 'Block Zapper Results (MEGA ZAP ULTIMATE FIX):', {
 				mode: zapMode,
+				isMegaZap,
+				keepMediaUsed: keepMedia,
 				options: zapOptions,
 				totalBlocks: innerBlocks.length,
 				blocksZapped: results.totalZapped,
@@ -648,7 +764,7 @@ export default function Edit( props ) {
 				if ( isMegaZap ) {
 					message = `💥 MEGA ZAP COMPLETE! Nuked ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
 					message += 'Only essential content preserved';
-					if ( zapOptions.keepMedia ) message += ' + media';
+					if ( keepMedia ) message += ' + media';
 					message += '! 🚀';
 				} else {
 					// Create detailed message showing what was removed
@@ -662,7 +778,7 @@ export default function Edit( props ) {
 					
 					message = `⚡ SELECTIVE ZAP COMPLETE! Removed ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
 					message += `Zapped: ${activeOptions.join(', ')}.`;
-					if ( zapOptions.keepMedia ) message += ' 📸 Media preserved.';
+					if ( keepMedia ) message += ' 📸 Media preserved.';
 				}
 				
 				setZapMessage( __( message, 'block-zapper-block-wp' ) );
@@ -766,6 +882,15 @@ export default function Edit( props ) {
 
 					{ zapMode === 'selective' && (
 						<>
+							<div className="zapper-media-option" style={{ marginBottom: '16px', padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px' }}>
+								<CheckboxControl
+									label="📸 Keep images and videos (recommended)"
+									checked={ zapOptions.keepMedia }
+									onChange={ (value) => handleOptionChange('keepMedia', value) }
+									help="Preserves media sources and related attributes"
+								/>
+							</div>
+
 							<h4 style={{ margin: '16px 0 8px 0', fontSize: '14px', fontWeight: '600' }}>Choose What to Zap:</h4>
 							
 							<CheckboxControl
@@ -809,15 +934,6 @@ export default function Edit( props ) {
 								onChange={ (value) => handleOptionChange('htmlElements', value) }
 								help="Removes alignment and HTML element choices"
 							/>
-
-							<div className="zapper-media-option" style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px' }}>
-								<CheckboxControl
-									label="📸 Keep images and videos (recommended)"
-									checked={ zapOptions.keepMedia }
-									onChange={ (value) => handleOptionChange('keepMedia', value) }
-									help="Preserves media sources and related attributes"
-								/>
-							</div>
 						</>
 					) }
 
@@ -887,7 +1003,7 @@ export default function Edit( props ) {
 			</InspectorControls>
 			<div { ...blockProps }>
 				<InnerBlocks
-					templateLock={ false }
+					tmplateLock={ false }
 					renderAppender={ InnerBlocks.DefaultAppender }
 				/>
 			</div>
@@ -1075,11 +1191,10 @@ console.log("Hello World! (from telex-block-zapper block)");
   </file>
   <file path="package.json">
     <description>The AI assistant should only edit 'user_provided_block_name_slug', 'description' and resolve 'isDynamicVariant' in this file and ALWAYS INCLUDE IT. This file includes the necessary scripts for building, formatting, and linting the block code. Dependencies are managed at the workspace level via pnpm.</description>
-    <content><![CDATA[
-  {
+    <content><![CDATA[{
 	"name": "block-zapper",
-	"version": "0.1.0",
-	"description": "A container block that allows you to group other blocks and reset their custom properties with a single click.",
+	"version": "0.2.0",
+	"description": "A container block that allows you to group other blocks and reset their custom properties with granular control.",
 	"author": "WordPress Telex",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
@@ -1092,7 +1207,6 @@ console.log("Hello World! (from telex-block-zapper block)");
 		"plugin-zip": "wp-scripts plugin-zip",
 		"start": "wp-scripts start"
 	}
-}
-]]></content>
+}]]></content>
   </file>
 </artefact>

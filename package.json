@@ -1,8 +1,7 @@
-
-  {
+{
 	"name": "block-zapper",
-	"version": "0.1.0",
-	"description": "A container block that allows you to group other blocks and reset their custom properties with a single click.",
+	"version": "0.2.0",
+	"description": "A container block that allows you to group other blocks and reset their custom properties with granular control.",
 	"author": "WordPress Telex",
 	"license": "GPL-2.0-or-later",
 	"main": "build/index.js",
