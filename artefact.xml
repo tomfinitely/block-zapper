@@ -2,37 +2,46 @@
 <artefact xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="artefact.xsd" name="Block Zapper" slug="block-zapper" type="code-package" schemaVersion="2">
   <file path="readme.txt">
     <description>This file contains the readme information for the block. It is used to provide information about the block, its usage, and any other relevant details.</description>
-    <content><![CDATA[
-=== Block Zapper ===
+    <content><![CDATA[=== Block Zapper ===
 
 Contributors:      WordPress Telex
-Tags:              block, container, group, cleanup
+Tags:              block, container, group, cleanup, selective
 Tested up to:      6.8
 Stable tag:        0.1.0
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
-A powerful container block that allows you to group other blocks and reset their custom properties with a single click.
+A powerful container block with granular control to selectively remove custom properties from child blocks.
 
 == Description ==
 
-Block Zapper is a container block similar to the WordPress Group block, but with a special superpower: the ability to remove all custom properties from child blocks contained within it.
+Block Zapper is a container block similar to the WordPress Group block, but with selective superpowers: the ability to remove specific types of custom properties from child blocks contained within it using granular checkbox controls.
 
 This block is perfect for:
 
-* Creating clean sections on your website
+* Creating clean sections on your website with precise control
 * Grouping related content blocks together
-* Quickly resetting block customizations when you want to start fresh
-* Managing complex layouts with multiple nested blocks
+* Selectively resetting specific customizations while keeping others
+* Managing complex layouts with fine-tuned cleanup options
+* Preserving important content like media while removing styling
 
-The "zap!" button in the block inspector allows you to instantly remove all custom styling, spacing, colors, and other modifications from any blocks placed inside the Block Zapper container.
+The selective "ZAP!" functionality in the block inspector allows you to choose exactly what to remove from any blocks placed inside the Block Zapper container.
 
 == Key Features ==
 
-* **Container Functionality**: Works like a standard group block - add any blocks inside
-* **One-Click Reset**: Remove all custom properties from child blocks with the "zap!" button
-* **Non-Destructive**: Only removes custom styling and properties, keeps the actual content intact
-* **Flexible Layout**: Supports all standard WordPress blocks as children
-* **Easy to Use**: Simple interface with clear labeling
+* **Granular Control**: Choose exactly what to zap with 7 different categories:
+  * ⚙️ Block settings (layout, alignment, etc.)
+  * 🎨 Block styles (colors, gradients, backgrounds) 
+  * 🔧 Custom properties (fonts, spacing, borders, effects)
+  * 📸 Keep images and videos (recommended)
+  * 📝 Custom classes (Additional CSS class(es))
+  * ⚓ Custom anchors (HTML anchor)
+  * 🏷️ HTML element selections (alignment, tags)
+
+* **Smart Preservation**: Essential content like text, images, and URLs are always preserved
+* **Media Protection**: Option to keep all media-related attributes intact
+* **Visual Feedback**: Clear status display showing blocks and properties count
+* **Undo Support**: All changes can be undone with standard WordPress undo
+* **Real-time Updates**: See changes immediately in the editor
 
 == Installation ==
 
@@ -45,23 +54,55 @@ The "zap!" button in the block inspector allows you to instantly remove all cust
 1. Add a Block Zapper block to your post or page
 2. Insert any blocks you want inside the Block Zapper container
 3. Customize the child blocks as needed (colors, spacing, fonts, etc.)
-4. When you want to reset all customizations, select the Block Zapper block
-5. Click the "zap!" button in the block inspector sidebar
-6. All custom properties will be removed from the child blocks instantly
+4. Select the Block Zapper block to see the inspector controls
+5. Choose which types of properties you want to zap using the checkboxes:
+   - Check "Block settings" to remove layout and alignment
+   - Check "Block styles" to remove colors and backgrounds
+   - Check "Custom properties" to remove fonts, spacing, and borders
+   - Keep "Keep images and videos" checked to preserve media
+   - Check "Custom classes" to remove additional CSS classes
+   - Check "Custom anchors" to remove HTML anchor IDs
+   - Check "HTML element selections" to remove alignment and tag choices
+6. Click the "SELECTIVE ZAP!" button to apply your choices
+7. All matching properties will be removed from child blocks instantly
+
+== Granular Zapping Categories ==
+
+**⚙️ Block Settings**: Removes core block functionality like layout, vertical alignment, and template settings.
+
+**🎨 Block Styles**: Removes visual styling including background colors, text colors, gradients, and overlay colors.
+
+**🔧 Custom Properties**: Removes typography (fonts, sizes, weights), spacing (margin, padding), borders, shadows, effects, dimensions, and positioning.
+
+**📸 Keep Media**: When checked, preserves all media-related attributes like image sources, video settings, and media controls.
+
+**📝 Custom Classes**: Removes the "Additional CSS class(es)" field content from the Advanced panel.
+
+**⚓ Custom Anchors**: Removes the "HTML anchor" field content from the Advanced panel.
+
+**🏷️ HTML Element Selections**: Removes alignment settings and HTML element tag choices.
 
 == Frequently Asked Questions ==
 
-= Does the "zap!" button delete my content? =
+= Does the zap button delete my content? =
 
-No! The zap button only removes custom styling and properties like colors, spacing, fonts, and other visual customizations. Your actual text content, images, and block structure remain completely intact.
+No! The zap functionality only removes the specific types of properties you select. Your actual text content, images, links, and core block structure remain completely intact. Essential content attributes are always preserved regardless of your selections.
 
 = Can I undo the zap action? =
 
-Yes, you can use the standard WordPress undo functionality (Ctrl+Z or Cmd+Z) to restore the custom properties if you zap them by mistake.
+Yes, you can use the standard WordPress undo functionality (Ctrl+Z or Cmd+Z) to restore the properties if you zap them by mistake.
 
-= What types of blocks can I put inside Block Zapper? =
+= What happens if I don't select any zap options? =
 
-You can insert any WordPress block inside the Block Zapper container - paragraphs, images, headings, columns, and even other container blocks.
+The "SELECTIVE ZAP!" button will be disabled until you select at least one zapping option. This prevents accidental clicks when no changes would be made.
+
+= Why should I keep "Keep images and videos" checked? =
+
+This option preserves important media attributes like image sources, alt text, video controls, and accessibility features. Unchecking it could remove these essential media properties and break your media blocks.
+
+= Can I zap blocks multiple times with different settings? =
+
+Yes! You can run multiple zap operations with different checkbox combinations. The block remembers your last settings for convenience.
 
 = Will this affect blocks outside the Block Zapper? =
 
@@ -69,23 +110,35 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 
 == Screenshots ==
 
-1. Block Zapper in the block inserter
-2. Container with child blocks and custom styling applied
-3. The "zap!" button in the block inspector sidebar
-4. Result after clicking zap - clean blocks with no custom properties
+1. Block Zapper in the block inserter with database-remove icon
+2. Container with child blocks showing various custom styling applied
+3. Inspector controls showing all seven granular zap options with checkboxes
+4. Status display showing block count and properties before zapping
+5. Success message after selective zapping with detailed results
+6. Clean blocks with only selected properties removed
 
 == Changelog ==
 
 = 0.1.0 =
-* Initial release
+* Initial release with granular zapping controls
+* Seven selective zap categories with checkboxes
 * Container functionality with inner blocks support
-* "zap!" button to remove custom properties from child blocks
+* Smart media preservation options
+* Real-time status display and feedback
 * Integration with WordPress block editor
+* Comprehensive error handling and validation
+
+== Advanced Usage Tips ==
+
+* Use "Block styles" alone to remove only colors while keeping spacing
+* Combine "Custom classes" and "Custom anchors" to clean up Advanced panel settings
+* Keep "Keep images and videos" checked unless you specifically want to reset media attributes
+* Use "HTML element selections" to reset alignment without affecting other styling
+* The status display shows total properties to help you understand what's being modified
 
 == Support ==
 
-For support and feature requests, please contact WordPress Telex.
-]]></content>
+For support and feature requests, please contact WordPress Telex. Check the browser console for detailed debugging information if needed.]]></content>
   </file>
   <file path="block-zapper.php">
     <description>This file contains the block registration code in the form of a single block plugin. Any other plugin related functionality should be added to this file. All block rendering functionality should go to the `render.php` file.</description>
@@ -125,8 +178,7 @@ add_action( 'init', 'telex_block_zapper_block_init' );
     <description>This file contains metadata about the block including its name, title, category, icon, and other properties. The icon is a WordPress Dashicon name (e.g., "admin-post", "format-aside", "admin-page"). Do not use any icon that's not in the list under any circustamce. These are the only slugs available:
 	
 	menu menu-alt menu-alt2 menu-alt3 admin-site admin-site-alt admin-site-alt2 admin-site-alt3 dashboard admin-post admin-media admin-links admin-page admin-comments admin-appearance admin-plugins plugins-checked admin-users admin-tools admin-settings admin-network admin-home admin-generic admin-collapse filter admin-customizer admin-multisite welcome-write-blog welcome-add-page welcome-view-site welcome-widgets-menus welcome-comments welcome-learn-more format-aside format-image format-gallery format-video format-status format-quote format-chat format-audio camera camera-alt images-alt images-alt2 video-alt video-alt2 video-alt3 media-archive media-audio media-code media-default media-document media-interactive media-spreadsheet media-text media-video playlist-audio playlist-video controls-play controls-pause controls-forward controls-skipforward controls-back controls-skipback controls-repeat controls-volumeon controls-volumeoff image-crop image-rotate image-rotate-left image-rotate-right image-flip-vertical image-flip-horizontal image-filter undo redo database-add database database-export database-import database-remove database-view align-full-width align-pull-left align-pull-right align-wide block-default button cloud-saved cloud-upload columns cover-image ellipsis embed-audio embed-generic embed-photo embed-post embed-video exit heading html info-outline insert insert-after insert-before remove saved shortcode table-col-after table-col-before table-col-delete table-row-after table-row-before table-row-delete editor-bold editor-italic editor-ul editor-ol editor-ol-rtl editor-quote editor-alignleft editor-aligncenter editor-alignright editor-insertmore editor-spellcheck editor-expand editor-contract editor-kitchensink editor-underline editor-justify editor-textcolor editor-paste-word editor-paste-text editor-removeformatting editor-video editor-customchar editor-outdent editor-indent editor-help editor-strikethrough editor-unlink editor-rtl editor-ltr editor-break editor-code editor-paragraph editor-table align-left align-right align-center align-none lock unlock calendar calendar-alt visibility hidden post-status edit trash sticky external arrow-up arrow-down arrow-right arrow-left arrow-up-alt arrow-down-alt arrow-right-alt arrow-left-alt arrow-up-alt2 arrow-down-alt2 arrow-right-alt2 arrow-left-alt2 sort leftright randomize list-view excerpt-view grid-view move share share-alt share-alt2 rss email email-alt email-alt2 networking amazon facebook facebook-alt google instagram linkedin pinterest podio reddit spotify twitch twitter twitter-alt whatsapp xing youtube hammer art migrate performance universal-access universal-access-alt tickets nametag clipboard heart megaphone schedule tide rest-api code-standards buddicons-activity buddicons-bbpress-logo buddicons-buddypress-logo buddicons-community buddicons-forums buddicons-friends buddicons-groups buddicons-pm buddicons-replies buddicons-topics buddicons-tracking wordpress wordpress-alt pressthis update update-alt screenoptions info cart feedback cloud translation tag category archive tagcloud text bell yes yes-alt no no-alt plus plus-alt plus-alt2 minus dismiss marker star-filled star-half star-empty flag warning location location-alt vault shield shield-alt sos search slides text-page analytics chart-pie chart-bar chart-line chart-area groups businessman businesswoman businessperson id id-alt products awards forms testimonial portfolio book book-alt download upload backup clock lightbulb microphone desktop laptop tablet smartphone phone index-card carrot building store album palmtree tickets-alt money money-alt smiley thumbs-up thumbs-down layout paperclip color-picker edit-large edit-page airplane bank beer calculator car coffee drumstick food fullscreen-alt fullscreen-exit-alt games hourglass open-folder pdf pets printer privacy superhero superhero-alt</description>
-    <content><![CDATA[
-  {
+    <content><![CDATA[{
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "telex/block-zapper",
@@ -134,7 +186,7 @@ add_action( 'init', 'telex_block_zapper_block_init' );
 	"title": "Block Zapper",
 	"category": "design",
 	"icon": "database-remove",
-	"description": "A container block that allows you to group other blocks and reset their custom properties with a single click.",
+	"description": "A container block that allows you to group other blocks and reset their custom properties with granular control.",
 	"example": {
 		"innerBlocks": [
 			{
@@ -150,6 +202,36 @@ add_action( 'init', 'telex_block_zapper_block_init' );
 				}
 			}
 		]
+	},
+	"attributes": {
+		"zapBlockSettings": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapBlockStyles": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapCustomProperties": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapKeepMedia": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapCustomClasses": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapCustomAnchors": {
+			"type": "boolean",
+			"default": true
+		},
+		"zapHtmlElements": {
+			"type": "boolean",
+			"default": true
+		}
 	},
 	"supports": {
 		"html": false,
@@ -169,8 +251,7 @@ add_action( 'init', 'telex_block_zapper_block_init' );
 	"style": "file:./style-index.css",
 	"viewScript": "file:./view.js",
 	"render": "file:./render.php"
-}
-  ]]></content>
+}]]></content>
   </file>
   <file path="src/index.js">
     <description>This file registers the block, specifies the edit and save functions, and loads the block's metadata</description>
@@ -230,9 +311,10 @@ import { useBlockProps, InnerBlocks, InspectorControls } from '@wordpress/block-
 /**
  * WordPress dependencies
  */
-import { PanelBody, Button, Notice } from '@wordpress/components';
+import { PanelBody, Button, Notice, CheckboxControl, Card, CardBody, RadioControl } from '@wordpress/components';
 import { useSelect, useDispatch } from '@wordpress/data';
 import { useState, useEffect } from '@wordpress/element';
+import { createBlock } from '@wordpress/blocks';
 
 /**
  * Lets webpack process CSS, SASS or SCSS files referenced in JavaScript files.
@@ -252,18 +334,37 @@ import './editor.scss';
  * @return {Element} Element to render.
  */
 export default function Edit( props ) {
-	const { clientId } = props;
+	const { clientId, attributes, setAttributes } = props;
 	const blockProps = useBlockProps();
 	const [ isZapping, setIsZapping ] = useState( false );
 	const [ zapMessage, setZapMessage ] = useState( '' );
 	const [ lastZapTime, setLastZapTime ] = useState( null );
 
+	// Zap mode state
+	const [ zapMode, setZapMode ] = useState( 'selective' );
+
+	// Zapping options state
+	const [ zapOptions, setZapOptions ] = useState( {
+		blockSettings: attributes.zapBlockSettings ?? true,
+		blockStyles: attributes.zapBlockStyles ?? true,
+		customProperties: attributes.zapCustomProperties ?? true,
+		keepMedia: attributes.zapKeepMedia ?? true,
+		customClasses: attributes.zapCustomClasses ?? true,
+		customAnchors: attributes.zapCustomAnchors ?? true,
+		htmlElements: attributes.zapHtmlElements ?? true
+	} );
+
 	const { updateBlockAttributes, replaceBlock } = useDispatch( 'core/block-editor' );
-	const { createBlock } = useDispatch( 'core/blocks' );
 
 	// Get inner blocks with more detailed information
 	const innerBlocks = useSelect( ( select ) => {
-		return select( 'core/block-editor' ).getBlocks( clientId );
+		try {
+			const blocks = select( 'core/block-editor' ).getBlocks( clientId );
+			return Array.isArray( blocks ) ? blocks : [];
+		} catch ( error ) {
+			console.error( 'Error getting inner blocks:', error );
+			return [];
+		}
 	}, [ clientId ] );
 
 	// Clear message after timeout
@@ -271,113 +372,356 @@ export default function Edit( props ) {
 		if ( zapMessage ) {
 			const timeout = setTimeout( () => {
 				setZapMessage( '' );
-			}, 7000 );
+			}, 10000 );
 			return () => clearTimeout( timeout );
 		}
 	}, [ zapMessage ] );
 
-	/**
-	 * Create a completely clean version of a block with only essential content
-	 */
-	const createCleanBlock = ( block ) => {
-		const essentialAttributes = ['content', 'url', 'alt', 'caption', 'href', 'text', 'level', 'tagName', 'value', 'label', 'placeholder', 'id', 'title', 'src', 'type', 'checked', 'selected', 'disabled', 'required', 'multiple', 'name'];
-		
-		// Only keep essential content attributes
-		const cleanedAttributes = {};
-		essentialAttributes.forEach( key => {
-			if ( block.attributes[ key ] !== undefined ) {
-				cleanedAttributes[ key ] = block.attributes[ key ];
-			}
+	// Save zap options to block attributes
+	useEffect( () => {
+		setAttributes( {
+			zapBlockSettings: zapOptions.blockSettings,
+			zapBlockStyles: zapOptions.blockStyles,
+			zapCustomProperties: zapOptions.customProperties,
+			zapKeepMedia: zapOptions.keepMedia,
+			zapCustomClasses: zapOptions.customClasses,
+			zapCustomAnchors: zapOptions.customAnchors,
+			zapHtmlElements: zapOptions.htmlElements
 		} );
+	}, [ zapOptions, setAttributes ] );
 
-		// Recursively clean inner blocks
-		const cleanedInnerBlocks = block.innerBlocks ? 
-			block.innerBlocks.map( innerBlock => createCleanBlock( innerBlock ) ) : 
-			[];
-
-		// Create new block with clean attributes
-		const { createBlock } = wp.blocks;
-		return createBlock( block.name, cleanedAttributes, cleanedInnerBlocks );
+	/**
+	 * Safely get attributes from block, handling undefined cases
+	 */
+	const getBlockAttributes = ( block ) => {
+		if ( ! block || typeof block !== 'object' ) {
+			return {};
+		}
+		return block.attributes || {};
 	};
 
 	/**
-	 * Replace blocks with completely clean versions
+	 * Get categorized attributes based on zap options
 	 */
-	const zapAllBlocks = ( blocks ) => {
+	const getCategorizedAttributes = ( attributes, isMegaZap = false, keepMedia = true ) => {
+		const categories = {
+			essential: [
+				// Core content that should always be preserved
+				'content', 'url', 'alt', 'caption', 'href', 'text', 'level', 'tagName', 'value',
+				'label', 'placeholder', 'title', 'type', 'checked', 'selected', 'disabled',
+				'required', 'multiple', 'name', 'id', 'headers', 'scope'
+			],
+			media: [
+				// Media-related attributes
+				'src', 'poster', 'preload', 'autoplay', 'controls', 'loop', 'muted',
+				'playsInline', 'crossOrigin', 'sizeSlug', 'blob', 'mediaId', 'mediaType',
+				'focalPoint', 'hasParallax', 'isRepeated', 'minHeight', 'minHeightUnit'
+			],
+			blockSettings: [
+				// Core block functionality
+				'orientation', 'verticalAlignment', 'templateLock', 'allowedBlocks',
+				'layout', 'templateInsertUpdatesSelection'
+			],
+			blockStyles: [
+				// Visual styling
+				'backgroundColor', 'textColor', 'customBackgroundColor', 'customTextColor',
+				'gradient', 'customGradient', 'overlayColor', 'customOverlayColor'
+			],
+			customProperties: [
+				// Typography, spacing, borders, effects
+				'fontSize', 'customFontSize', 'fontFamily', 'fontStyle', 'fontWeight',
+				'letterSpacing', 'textDecoration', 'textTransform', 'lineHeight',
+				'style', 'margin', 'padding', 'blockGap', 'borderColor', 'customBorderColor',
+				'borderRadius', 'borderWidth', 'borderStyle', 'shadow', 'filter',
+				'width', 'height', 'aspectRatio', 'scale', 'position', 'zIndex',
+				'top', 'right', 'bottom', 'left'
+			],
+			customClasses: [
+				'className'
+			],
+			customAnchors: [
+				'anchor'
+			],
+			htmlElements: [
+				// HTML element selection and alignment
+				'align', 'nodeName'
+			]
+		};
+
+		const toKeep = new Set( categories.essential );
+		
+		// Always preserve media if keepMedia is true
+		if ( keepMedia ) {
+			categories.media.forEach( attr => toKeep.add( attr ) );
+		}
+		
+		if ( isMegaZap ) {
+			// Mega zap: only preserve essential content and optionally media
+			// Media is already handled above based on keepMedia flag
+		} else {
+			// Selective zap: add categories to keep based on zap options
+			if ( ! zapOptions.blockSettings ) {
+				categories.blockSettings.forEach( attr => toKeep.add( attr ) );
+			}
+			if ( ! zapOptions.blockStyles ) {
+				categories.blockStyles.forEach( attr => toKeep.add( attr ) );
+			}
+			if ( ! zapOptions.customProperties ) {
+				categories.customProperties.forEach( attr => toKeep.add( attr ) );
+			}
+			if ( ! zapOptions.customClasses ) {
+				categories.customClasses.forEach( attr => toKeep.add( attr ) );
+			}
+			if ( ! zapOptions.customAnchors ) {
+				categories.customAnchors.forEach( attr => toKeep.add( attr ) );
+			}
+			if ( ! zapOptions.htmlElements ) {
+				categories.htmlElements.forEach( attr => toKeep.add( attr ) );
+			}
+		}
+
+		// Filter attributes
+		const cleanedAttributes = {};
+		const removedAttributes = [];
+
+		Object.keys( attributes ).forEach( key => {
+			if ( toKeep.has( key ) ) {
+				cleanedAttributes[ key ] = attributes[ key ];
+			} else {
+				removedAttributes.push( key );
+			}
+		} );
+
+		return { cleanedAttributes, removedAttributes };
+	};
+
+	/**
+	 * Create a clean version of a block based on zap mode and options
+	 */
+	const createCleanBlock = ( block, isMegaZap = false, keepMedia = true ) => {
+		if ( ! block || ! block.name ) {
+			console.warn( 'Invalid block passed to createCleanBlock:', block );
+			return null;
+		}
+
+		const attributes = getBlockAttributes( block );
+		const { cleanedAttributes, removedAttributes } = getCategorizedAttributes( attributes, isMegaZap, keepMedia );
+
+		// Recursively clean inner blocks if they exist
+		const cleanedInnerBlocks = [];
+		if ( Array.isArray( block.innerBlocks ) ) {
+			block.innerBlocks.forEach( innerBlock => {
+				const cleanedInner = createCleanBlock( innerBlock, isMegaZap, keepMedia );
+				if ( cleanedInner && cleanedInner.cleanBlock ) {
+					cleanedInnerBlocks.push( cleanedInner.cleanBlock );
+				}
+			} );
+		}
+
+		// Create new block with cleaned attributes
+		try {
+			const newBlock = createBlock( block.name, cleanedAttributes, cleanedInnerBlocks );
+			return {
+				cleanBlock: newBlock,
+				removedAttributes
+			};
+		} catch ( error ) {
+			console.error( `Error creating clean block for ${block.name}:`, error );
+			return null;
+		}
+	};
+
+	/**
+	 * Replace blocks with clean versions
+	 */
+	const zapBlocks = ( blocks, isMegaZap = false ) => {
+		if ( ! Array.isArray( blocks ) || blocks.length === 0 ) {
+			return { totalZapped: 0, zapDetails: [], totalAttributesRemoved: 0 };
+		}
+
+		// Use the current keepMedia setting
+		const keepMedia = zapOptions.keepMedia;
+
 		let totalZapped = 0;
 		const zapDetails = [];
+		let totalAttributesRemoved = 0;
+		const replacements = [];
 
 		blocks.forEach( ( block ) => {
-			const blockName = block.name.replace('core/', '');
-			const beforeProps = Object.keys( block.attributes ).length;
-			
-			// Create a completely clean version of the block
-			const cleanBlock = createCleanBlock( block );
-			const afterProps = Object.keys( cleanBlock.attributes ).length;
-			const removedCount = beforeProps - afterProps;
+			if ( ! block || ! block.clientId ) {
+				console.warn( 'Invalid block in zapBlocks:', block );
+				return;
+			}
 
-			if ( removedCount > 0 ) {
-				// Replace the block entirely with the clean version
-				replaceBlock( block.clientId, cleanBlock );
+			const blockName = block.name ? block.name.replace('core/', '') : 'unknown';
+			const attributes = getBlockAttributes( block );
+			const beforeCount = Object.keys( attributes ).length;
+			
+			// Create a clean version of the block
+			const result = createCleanBlock( block, isMegaZap, keepMedia );
+			
+			if ( ! result || ! result.cleanBlock ) {
+				console.warn( `Could not create clean block for ${blockName}` );
+				return;
+			}
+
+			const cleanBlock = result.cleanBlock;
+			const removedAttrs = result.removedAttributes || [];
+			const afterCount = Object.keys( cleanBlock.attributes || {} ).length;
+			const removedCount = beforeCount - afterCount;
+
+			if ( removedCount > 0 || removedAttrs.length > 0 ) {
+				replacements.push({ 
+					originalId: block.clientId, 
+					newBlock: cleanBlock 
+				});
+				
 				totalZapped++;
+				totalAttributesRemoved += removedCount;
 				
 				zapDetails.push({
 					name: blockName,
-					before: beforeProps,
-					after: afterProps,
-					removed: removedCount
+					before: beforeCount,
+					after: afterCount,
+					removed: removedCount,
+					removedAttributes: removedAttrs
 				});
 			}
 		} );
 
-		return { totalZapped, zapDetails };
+		// Perform all replacements
+		replacements.forEach( ({ originalId, newBlock }) => {
+			try {
+				replaceBlock( originalId, newBlock );
+			} catch ( error ) {
+				console.error( 'Error replacing block:', error );
+			}
+		} );
+
+		return { totalZapped, zapDetails, totalAttributesRemoved };
 	};
 
 	/**
-	 * Handle the zap action with block replacement for immediate visual feedback
+	 * Handle the zap action based on selected mode
 	 */
 	const handleZap = () => {
 		setIsZapping( true );
 		
 		try {
-			if ( innerBlocks.length === 0 ) {
+			if ( ! Array.isArray( innerBlocks ) || innerBlocks.length === 0 ) {
 				setZapMessage( __( '⚡ No blocks to zap! Add some blocks inside this container first.', 'block-zapper-block-wp' ) );
-			} else {
-				const results = zapAllBlocks( innerBlocks );
-				setLastZapTime( new Date().toLocaleTimeString() );
+				return;
+			}
 
-				// Log detailed results to console for debugging
-				console.log( 'Block Zapper Results:', {
-					totalBlocks: innerBlocks.length,
-					blocksZapped: results.totalZapped,
-					details: results.zapDetails
-				} );
+			const isMegaZap = zapMode === 'mega';
 
-				if ( results.totalZapped > 0 ) {
-					const totalPropsRemoved = results.zapDetails.reduce( (total, d) => total + d.removed, 0 );
-					const detailText = results.zapDetails.map( d => 
-						`${d.name}: ${d.removed} props removed`
-					).join( ', ' );
-					
-					setZapMessage( 
-						__( `⚡ ZAP COMPLETE! Removed ${totalPropsRemoved} properties from ${results.totalZapped} block(s). Details: ${detailText}`, 'block-zapper-block-wp' )
-					);
-				} else {
-					setZapMessage( __( '✨ All blocks are already clean! No custom properties found to remove.', 'block-zapper-block-wp' ) );
+			// For selective zap, check if any options are selected
+			if ( ! isMegaZap ) {
+				const hasAnyOption = Object.entries( zapOptions ).some( ([ key, value ]) => {
+					// Skip keepMedia as it's not a destructive option
+					if ( key === 'keepMedia' ) return false;
+					return value === true;
+				});
+				
+				if ( ! hasAnyOption ) {
+					setZapMessage( __( '⚠️ Please select at least one zap option to continue!', 'block-zapper-block-wp' ) );
+					return;
 				}
+			}
+
+			const results = zapBlocks( innerBlocks, isMegaZap );
+			setLastZapTime( new Date().toLocaleTimeString() );
+
+			// Log detailed results to console for debugging
+			console.log( 'Block Zapper Results:', {
+				mode: zapMode,
+				options: zapOptions,
+				totalBlocks: innerBlocks.length,
+				blocksZapped: results.totalZapped,
+				totalAttributesRemoved: results.totalAttributesRemoved,
+				details: results.zapDetails
+			} );
+
+			if ( results.totalZapped > 0 ) {
+				let message;
+				
+				if ( isMegaZap ) {
+					message = `💥 MEGA ZAP COMPLETE! Nuked ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
+					message += 'Only essential content preserved';
+					if ( zapOptions.keepMedia ) message += ' + media';
+					message += '! 🚀';
+				} else {
+					// Create detailed message showing what was removed
+					const activeOptions = [];
+					if ( zapOptions.blockSettings ) activeOptions.push('⚙️ settings');
+					if ( zapOptions.blockStyles ) activeOptions.push('🎨 styles');
+					if ( zapOptions.customProperties ) activeOptions.push('🔧 properties');
+					if ( zapOptions.customClasses ) activeOptions.push('📝 classes');
+					if ( zapOptions.customAnchors ) activeOptions.push('⚓ anchors');
+					if ( zapOptions.htmlElements ) activeOptions.push('🏷️ elements');
+					
+					message = `⚡ SELECTIVE ZAP COMPLETE! Removed ${results.totalAttributesRemoved} properties from ${results.totalZapped} block(s). `;
+					message += `Zapped: ${activeOptions.join(', ')}.`;
+					if ( zapOptions.keepMedia ) message += ' 📸 Media preserved.';
+				}
+				
+				setZapMessage( __( message, 'block-zapper-block-wp' ) );
+			} else {
+				const noChangeMessage = isMegaZap ? 
+					'✨ No properties found to mega zap! Blocks are already clean.' :
+					'✨ No matching properties found to zap with your current settings!';
+				setZapMessage( __( noChangeMessage, 'block-zapper-block-wp' ) );
 			}
 		} catch ( error ) {
 			console.error( 'Zap error:', error );
-			setZapMessage( __( '❌ Zap failed! Check the console for details: ' + error.message, 'block-zapper-block-wp' ) );
+			setZapMessage( __( '❌ Zap failed! Check the console for details: ' + ( error.message || 'Unknown error' ), 'block-zapper-block-wp' ) );
 		}
 
 		setIsZapping( false );
 	};
 
+	/**
+	 * Handle zap option changes
+	 */
+	const handleOptionChange = ( option, value ) => {
+		setZapOptions( prev => ({ ...prev, [option]: value }) );
+	};
+
 	// Count current total properties for display
-	const totalProps = innerBlocks.reduce( ( total, block ) => {
-		return total + Object.keys( block.attributes ).length;
-	}, 0 );
+	const totalProps = Array.isArray( innerBlocks ) ? innerBlocks.reduce( ( total, block ) => {
+		const attributes = getBlockAttributes( block );
+		return total + Object.keys( attributes ).length;
+	}, 0 ) : 0;
+
+	const blockCount = Array.isArray( innerBlocks ) ? innerBlocks.length : 0;
+
+	// Check if any destructive options are selected (only for selective mode)
+	const hasDestructiveOptions = zapOptions.blockSettings || zapOptions.blockStyles || 
+									zapOptions.customProperties || zapOptions.customClasses || 
+									zapOptions.customAnchors || zapOptions.htmlElements;
+
+	// Button properties based on mode
+	const getZapButtonProps = () => {
+		if ( zapMode === 'mega' ) {
+			return {
+				label: isZapping ? __( '💥 MEGA ZAPPING...', 'block-zapper-block-wp' ) : __( '💥 MEGA ZAP!', 'block-zapper-block-wp' ),
+				color: '#dd0000',
+				hoverColor: '#bb0000',
+				activeColor: '#990000',
+				disabled: isZapping || blockCount === 0
+			};
+		} else {
+			return {
+				label: isZapping ? __( '⚡ SELECTIVE ZAPPING...', 'block-zapper-block-wp' ) : __( '⚡ SELECTIVE ZAP!', 'block-zapper-block-wp' ),
+				color: hasDestructiveOptions ? '#ff4444' : '#ccc',
+				hoverColor: '#cc3333',
+				activeColor: '#aa2222',
+				disabled: isZapping || blockCount === 0 || !hasDestructiveOptions
+			};
+		}
+	};
+
+	const buttonProps = getZapButtonProps();
 
 	return (
 		<>
@@ -386,41 +730,149 @@ export default function Edit( props ) {
 					title={ __( '⚡ Block Zapper Controls', 'block-zapper-block-wp' ) }
 					initialOpen={ true }
 				>
-					<div style={{ marginBottom: '16px', padding: '12px', backgroundColor: '#f0f0f0', borderRadius: '4px' }}>
-						<strong>Container Status:</strong>
-						<br />
-						📦 { innerBlocks.length } block(s) inside
-						<br />
-						🎨 { totalProps } total properties
-						{ lastZapTime && (
-							<>
+					<Card>
+						<CardBody>
+							<div style={{ marginBottom: '16px', fontSize: '14px' }}>
+								<strong>📦 Container Status:</strong>
 								<br />
-								🕐 Last zap: { lastZapTime }
-							</>
+								🧱 { blockCount } block(s) inside
+								<br />
+								🔢 { totalProps } total properties
+								{ lastZapTime && (
+									<>
+										<br />
+										🕐 Last zap: { lastZapTime }
+									</>
+								) }
+							</div>
+						</CardBody>
+					</Card>
+
+					<div style={{ margin: '16px 0' }}>
+						<RadioControl
+							label={ __( '🎯 Zap Mode', 'block-zapper-block-wp' ) }
+							help={ zapMode === 'mega' ? 
+								__( 'Nuclear option: removes ALL styling, keeps only content + media (if selected)', 'block-zapper-block-wp' ) :
+								__( 'Choose specific types of properties to remove with granular control', 'block-zapper-block-wp' )
+							}
+							selected={ zapMode }
+							options={ [
+								{ label: '⚡ Selective Zap (choose what to remove)', value: 'selective' },
+								{ label: '💥 Mega Zap (nuclear option)', value: 'mega' }
+							] }
+							onChange={ setZapMode }
+						/>
+					</div>
+
+					{ zapMode === 'selective' && (
+						<>
+							<h4 style={{ margin: '16px 0 8px 0', fontSize: '14px', fontWeight: '600' }}>Choose What to Zap:</h4>
+							
+							<CheckboxControl
+								label="⚙️ Block settings (layout, alignment, etc.)"
+								checked={ zapOptions.blockSettings }
+								onChange={ (value) => handleOptionChange('blockSettings', value) }
+								help="Removes core block functionality settings"
+							/>
+							
+							<CheckboxControl
+								label="🎨 Block styles (colors, gradients, backgrounds)"
+								checked={ zapOptions.blockStyles }
+								onChange={ (value) => handleOptionChange('blockStyles', value) }
+								help="Removes color and gradient styling"
+							/>
+							
+							<CheckboxControl
+								label="🔧 Custom properties (fonts, spacing, borders, effects)"
+								checked={ zapOptions.customProperties }
+								onChange={ (value) => handleOptionChange('customProperties', value) }
+								help="Removes typography, margin, padding, borders, shadows"
+							/>
+							
+							<CheckboxControl
+								label="📝 Custom classes (Additional CSS class(es))"
+								checked={ zapOptions.customClasses }
+								onChange={ (value) => handleOptionChange('customClasses', value) }
+								help="Removes custom CSS classes from Advanced panel"
+							/>
+							
+							<CheckboxControl
+								label="⚓ Custom anchors (HTML anchor)"
+								checked={ zapOptions.customAnchors }
+								onChange={ (value) => handleOptionChange('customAnchors', value) }
+								help="Removes HTML anchor IDs from Advanced panel"
+							/>
+							
+							<CheckboxControl
+								label="🏷️ HTML element selections (alignment, tags)"
+								checked={ zapOptions.htmlElements }
+								onChange={ (value) => handleOptionChange('htmlElements', value) }
+								help="Removes alignment and HTML element choices"
+							/>
+
+							<div className="zapper-media-option" style={{ marginTop: '16px', padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px' }}>
+								<CheckboxControl
+									label="📸 Keep images and videos (recommended)"
+									checked={ zapOptions.keepMedia }
+									onChange={ (value) => handleOptionChange('keepMedia', value) }
+									help="Preserves media sources and related attributes"
+								/>
+							</div>
+						</>
+					) }
+
+					{ zapMode === 'mega' && (
+						<>
+							<div style={{ padding: '16px', backgroundColor: '#fff3cd', border: '1px solid #ffeaa7', borderRadius: '4px', margin: '16px 0' }}>
+								<h4 style={{ margin: '0 0 8px 0', fontSize: '14px', fontWeight: '600', color: '#856404' }}>💥 Mega Zap Mode</h4>
+								<p style={{ margin: '0', fontSize: '13px', color: '#856404' }}>
+									<strong>Warning:</strong> This will remove ALL styling properties and customizations from blocks, keeping only essential content.
+								</p>
+							</div>
+
+							<div className="zapper-media-option zapper-mega-media-option" style={{ padding: '12px', backgroundColor: '#f8f9fa', border: '1px solid #e2e4e7', borderRadius: '4px', marginTop: '16px' }}>
+								<CheckboxControl
+									label="📸 Keep images and videos (recommended)"
+									checked={ zapOptions.keepMedia }
+									onChange={ (value) => handleOptionChange('keepMedia', value) }
+									help="Preserves media sources and related attributes during mega zap"
+								/>
+							</div>
+						</>
+					) }
+
+					<div style={{ marginTop: '16px', marginBottom: '8px' }}>
+						<Button
+							variant="secondary"
+							onClick={ handleZap }
+							isBusy={ isZapping }
+							disabled={ buttonProps.disabled }
+							style={ {
+								backgroundColor: isZapping ? '#999' : buttonProps.color,
+								color: '#fff',
+								border: 'none',
+								borderRadius: '4px',
+								padding: '12px 24px',
+								fontWeight: 'bold',
+								textTransform: 'uppercase',
+								fontSize: '16px',
+								width: '100%'
+							} }
+						>
+							{ buttonProps.label }
+						</Button>
+						{ zapMode === 'selective' && !hasDestructiveOptions && (
+							<p style={{ fontSize: '12px', color: '#666', marginTop: '8px', textAlign: 'center' }}>
+								Select at least one zap option to enable
+							</p>
+						) }
+						{ zapMode === 'mega' && blockCount === 0 && (
+							<p style={{ fontSize: '12px', color: '#666', marginTop: '8px', textAlign: 'center' }}>
+								Add blocks to the container to enable mega zap
+							</p>
 						) }
 					</div>
-					<p style={{ fontSize: '14px', marginBottom: '12px' }}>
-						{ __( 'This will completely replace all blocks inside with clean versions, removing ALL styling: colors, fonts, spacing, borders, alignments, and custom classes. Only content will be preserved!', 'block-zapper-block-wp' ) }
-					</p>
-					<Button
-						variant="secondary"
-						onClick={ handleZap }
-						isBusy={ isZapping }
-						disabled={ isZapping || innerBlocks.length === 0 }
-						style={ {
-							backgroundColor: isZapping ? '#999' : '#ff4444',
-							color: '#fff',
-							border: 'none',
-							borderRadius: '4px',
-							padding: '12px 24px',
-							fontWeight: 'bold',
-							textTransform: 'uppercase',
-							fontSize: '16px',
-							width: '100%'
-						} }
-					>
-						{ isZapping ? __( '⚡ ZAPPING...', 'block-zapper-block-wp' ) : __( '⚡ ZAP!', 'block-zapper-block-wp' ) }
-					</Button>
+					
 					{ zapMessage && (
 						<Notice 
 							status={ zapMessage.includes('COMPLETE') ? 'success' : zapMessage.includes('failed') ? 'error' : 'info' }
@@ -435,7 +887,7 @@ export default function Edit( props ) {
 			</InspectorControls>
 			<div { ...blockProps }>
 				<InnerBlocks
-					templateeLock={ false }
+					templateLock={ false }
 					renderAppender={ InnerBlocks.DefaultAppender }
 				/>
 			</div>
@@ -475,8 +927,7 @@ export default function Edit( props ) {
   </file>
   <file path="src/editor.scss">
     <description>This file contains styles for the block in the editor.</description>
-    <content><![CDATA[
-/**
+    <content><![CDATA[/**
  * The following styles get applied inside the editor only.
  *
  * Replace them with your own styles or remove the file completely.
@@ -516,7 +967,69 @@ export default function Edit( props ) {
 		}
 	}
 }
-	]]></content>
+
+/* Fix checkbox alignment issues in zapper controls */
+.zapper-media-option {
+	.components-checkbox-control {
+		/* Ensure proper alignment of checkbox */
+		.components-checkbox-control__input-container {
+			align-items: flex-start;
+			padding-top: 2px;
+		}
+		
+		/* Fix checkbox visual alignment */
+		.components-checkbox-control__input {
+			margin-top: 0;
+			vertical-align: top;
+		}
+		
+		/* Ensure text aligns properly with checkbox */
+		label {
+			display: flex;
+			align-items: flex-start;
+			gap: 8px;
+		}
+	}
+}
+
+/* Specific styling for mega zap mode media option */
+.zapper-mega-media-option {
+	.components-checkbox-control {
+		/* Enhanced styling for better visibility in mega zap mode */
+		.components-checkbox-control__label {
+			font-weight: 500;
+			color: #1e1e1e;
+		}
+		
+		.components-checkbox-control__help {
+			color: #757575;
+			font-size: 12px;
+			margin-top: 4px;
+		}
+	}
+	
+	/* Ensure proper spacing */
+	margin-bottom: 0;
+}
+
+/* Global checkbox control improvements */
+.components-panel__body .components-checkbox-control {
+	/* Consistent spacing */
+	margin-bottom: 16px;
+	
+	/* Better visual hierarchy */
+	.components-checkbox-control__label {
+		font-size: 14px;
+		line-height: 1.4;
+	}
+	
+	.components-checkbox-control__help {
+		color: #757575;
+		font-size: 12px;
+		margin-top: 4px;
+		line-height: 1.3;
+	}
+}]]></content>
   </file>
   <file path="src/view.js">
     <description>This file contains the view function for the block which is responsible for rendering interactive behaviors of the block on the front end. Ideally using the WordPress interactivity API.</description>
