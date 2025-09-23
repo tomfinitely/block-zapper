@@ -3,7 +3,7 @@
 Contributors:      WordPress Telex
 Tags:              block, container, group, cleanup, selective
 Tested up to:      6.8
-Stable tag:        0.3.1
+Stable tag:        0.3.2
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 A powerful container block with granular control to selectively remove custom properties from child blocks.
@@ -11,6 +11,8 @@ A powerful container block with granular control to selectively remove custom pr
 == Description ==
 
 Block Zapper is a container block similar to the WordPress Group block, but with selective superpowers: the ability to remove specific types of custom properties from child blocks contained within it using granular checkbox controls.
+
+⚠️ **CRITICAL WARNING**: Block Zapper CANNOT save data! ANY data left in Block Zapper will be LOST when you close the browser window/tab. It is a styling cleanup tool only. Do NOT use it to store important content, data, or information that needs to be preserved. The zap functionality will remove custom properties and styling - this is NOT a data storage solution!
 
 This block is perfect for:
 
@@ -53,6 +55,8 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 3. The Block Zapper block will be available in the block inserter under the "Design" category
 
 == Usage ==
+
+⚠️ **CRITICAL WARNING**: Block Zapper CANNOT save data! ANY data left in Block Zapper will be LOST when you close the browser window/tab. It is a styling cleanup tool only. Do NOT use it to store important content, data, or information that needs to be preserved. The zap functionality will remove custom properties and styling - this is NOT a data storage solution!
 
 1. Add a Block Zapper block to your post or page
 2. Insert any blocks you want inside the Block Zapper container
@@ -115,9 +119,13 @@ Yes! You can run multiple zap operations with different checkbox combinations an
 
 No, the zap action only affects blocks that are direct children of the Block Zapper container. Other blocks on your page remain untouched.
 
+= Can I store important data inside Block Zapper blocks? =
+
+ABSOLUTELY NOT! Block Zapper CANNOT save or store data. ANY data left in Block Zapper will be LOST when you close the browser window/tab. It is a styling cleanup tool only. Do NOT use it for storing important content, data, or information. The zap functionality will remove custom properties and styling - this is NOT a data storage solution! Use it only for cleaning up styling on blocks where you want to reset or remove customizations.
+
 == Screenshots ==
 
-1. Block Zapper in the block inserter with database-remove icon
+1. Block Zapper in the block inserter with lightning bolt icon
 2. Container with child blocks showing various custom styling applied
 3. Inspector controls showing selective zap mode with granular options
 4. Inspector controls showing mega zap mode with media preservation
@@ -126,6 +134,15 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 7. Clean blocks with only selected properties removed
 
 == Changelog ==
+
+= 0.3.2 =
+* WARNING: Added clear warnings about not storing important data in Block Zapper blocks
+* DOCUMENTATION: Enhanced usage instructions with data storage warnings
+* FAQ: Added specific FAQ about data storage limitations
+* TIPS: Added reminder about styling cleanup purpose only
+* ICON: Updated block icon to custom SVG with container and lightning bolt design for better visual representation
+* UPDATED: Documentation to clarify Block Zapper's intended use case
+* ENHANCED: Moved warning to top of description and usage sections for better visibility
 
 = 0.3.1 =
 * ENHANCED: Full accessibility support with ARIA labels and screen reader compatibility
@@ -170,6 +187,8 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 * Check the browser console for detailed debugging information about what was zapped
 * Use "Block styles" alone to remove only colors while keeping spacing
 * Combine "Custom classes" and "Custom anchors" to clean up Advanced panel settings
+
+⚠️ **CRITICAL REMINDER**: Block Zapper CANNOT save data! ANY data left in Block Zapper will be LOST when you close the browser window/tab. It is a styling cleanup tool only. Do NOT use it to store important content, data, or information. The zap functionality will remove custom properties and styling - this is NOT a data storage solution!
 
 == Support ==
 

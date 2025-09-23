@@ -6,6 +6,20 @@
 import { __ } from '@wordpress/i18n';
 
 /**
+ * Custom Block Zapper Icon Component
+ */
+const BlockZapperIcon = () => (
+	<svg xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" aria-hidden="true" role="img">
+		<rect x="1.5" y="2.5" width="13.5" height="19" rx="2.2" ry="2.2"
+			fill="#F3F4F6" stroke="#111217" strokeWidth="1.4" />
+		<rect x="3.1" y="4.1" width="10.8" height="15" rx="1.6" ry="1.6"
+			fill="none" stroke="#000000" strokeOpacity="0.06" strokeWidth="0.6"/>
+		<path d="M15.8 5.0 L11.6 11.0 H14.3 L9.8 19.0 L13.9 12.0 H11.6 L15.8 5.0 Z"
+			fill="#FFD24A" stroke="#111217" strokeWidth="0.9" strokeLinejoin="round" />
+	</svg>
+);
+
+/**
  * React hook that is used to mark the block wrapper element.
  * It provides all the necessary props like the class name.
  *

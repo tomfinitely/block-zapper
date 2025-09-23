@@ -2,10 +2,10 @@
 	"$schema": "https://schemas.wp.org/trunk/block.json",
 	"apiVersion": 3,
 	"name": "telex/block-zapper",
-	"version": "0.3.1",
+	"version": "0.3.2",
 	"title": "Block Zapper",
 	"category": "design",
-	"icon": "database-remove",
+	"icon": "lightning",
 	"description": "A container block that allows you to group other blocks and reset their custom properties with granular control.",
 	"example": {
 		"innerBlocks": [
