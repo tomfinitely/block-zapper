@@ -3,7 +3,7 @@
 Contributors:      WordPress Telex
 Tags:              block, container, group, cleanup, selective
 Tested up to:      6.8
-Stable tag:        0.2.0
+Stable tag:        0.3.1
 License:           GPLv2 or later
 License URI:       https://www.gnu.org/licenses/gpl-2.0.html
 A powerful container block with granular control to selectively remove custom properties from child blocks.
@@ -39,6 +39,9 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 
 * **Smart Preservation**: Essential content like text, images, and URLs are always preserved
 * **Media Protection**: Robust option to keep all media-related attributes intact in both modes
+* **Icon Block Support**: Full protection for Nick Diego's Icon Block plugin attributes
+* **Accessibility**: Full ARIA support, screen reader compatibility, and contextual descriptions
+* **Security**: Secure error handling, content sanitization, and production-safe logging
 * **Visual Feedback**: Clear status display showing blocks and properties count
 * **Undo Support**: All changes can be undone with standard WordPress undo
 * **Real-time Updates**: See changes immediately in the editor
@@ -70,7 +73,11 @@ The selective "ZAP!" functionality in the block inspector allows you to choose e
 
 **🔧 Custom Properties**: Removes typography (fonts, sizes, weights), spacing (margin, padding), borders, shadows, effects, dimensions, and positioning.
 
-**📸 Keep Media**: When checked, preserves all media-related attributes like image sources, video settings, and media controls in both selective and mega zap modes.
+**📸 Keep Media**: When checked, preserves all media-related attributes including:
+* Image sources, alt text, captions, and video settings
+* Cover block background images and positioning
+* Icon Block plugin attributes (Nick Diego's Icon Block)
+* All media controls and accessibility features
 
 **📝 Custom Classes**: Removes the "Additional CSS class(es)" field content from the Advanced panel.
 
@@ -94,11 +101,11 @@ Selective Zap lets you choose specific categories to remove with granular contro
 
 = Why should I keep "Keep images and videos" checked? =
 
-This option preserves important media attributes like image sources, alt text, video controls, and accessibility features. Unchecking it could remove these essential media properties and break your media blocks.
+This option preserves important media attributes including image sources, alt text, video controls, cover block backgrounds, and Icon Block plugin attributes. Unchecking it will remove these essential media properties and could break your media blocks.
 
 = Does "Keep images and videos" work in Mega Zap mode? =
 
-Yes! As of version 0.2.0, the media preservation feature works correctly in both Selective Zap and Mega Zap modes.
+Yes! As of version 0.3.0, the media preservation feature works correctly in both Selective Zap and Mega Zap modes, with identical protection for all media types including Icon Block plugin attributes.
 
 = Can I zap blocks multiple times with different settings? =
 
@@ -119,6 +126,24 @@ No, the zap action only affects blocks that are direct children of the Block Zap
 7. Clean blocks with only selected properties removed
 
 == Changelog ==
+
+= 0.3.1 =
+* ENHANCED: Full accessibility support with ARIA labels and screen reader compatibility
+* SECURITY: Implemented secure error handling and content sanitization
+* SECURITY: Added production-safe logging that doesn't expose sensitive information
+* ACCESSIBILITY: Added contextual descriptions for all interactive elements
+* ACCESSIBILITY: Improved button states and mode descriptions for better user experience
+* SECURITY: Content sanitization using WordPress wp_kses_post() function
+* UPDATED: Documentation with security and accessibility improvements
+
+= 0.3.0 =
+* FIXED: Media protection now works correctly in both Selective Zap and Mega Zap modes
+* ADDED: Full support for Nick Diego's Icon Block plugin attributes
+* ENHANCED: Cover block background image protection with comprehensive attribute coverage
+* IMPROVED: Media attribute handling with explicit allow list approach
+* FIXED: Core image attributes now properly respect "Keep images and videos" checkbox state
+* CLEANED: Removed all debugging console.log statements for production-ready code
+* UPDATED: Documentation with Icon Block support and enhanced media protection details
 
 = 0.2.0 =
 * FIXED: "Keep images and videos" now works correctly in Mega Zap mode
