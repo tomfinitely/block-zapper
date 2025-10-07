@@ -1,6 +1,6 @@
 === Block Zapper ===
 
-Contributors:      WordPress Telex
+Contributors:      WordPress Telex, Tom Finley
 Tags:              block, container, group, cleanup, selective
 Tested up to:      6.8
 Stable tag:        0.3.2
